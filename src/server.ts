@@ -1,5 +1,6 @@
 import express from 'express';
 import type { RowDataPacket } from 'mysql2';
+import path from 'node:path';
 import { z } from 'zod';
 import { db } from './db.js';
 import { signToken, verifyPassword, verifyToken, type AuthUser, type UserRole } from './auth.js';
@@ -7,6 +8,7 @@ import { config } from './config.js';
 import { requireAuth } from './middleware.js';
 
 const app = express();
+app.use(express.static(path.resolve(process.cwd(), 'public')));
 app.use(express.json({ limit: '32kb' }));
 
 const loginSchema = z.object({
