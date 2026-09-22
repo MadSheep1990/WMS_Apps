@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Master สินค้า | WMS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+    :root { --ink:#17231f; --muted:#71807a; --line:#dce4df; --paper:#f7f8f4; --white:#fff; --green:#0c6b58; --green-dark:#075243; --lime:#c8ec78; --red:#cf5f5f; --shadow:0 18px 45px rgba(24,47,39,.08); }
+    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--paper); font-family:'DM Sans',sans-serif; } button,input,select { font:inherit; } button { cursor:pointer; } .hidden { display:none!important; }
+    .shell { min-height:100vh; display:grid; grid-template-columns:250px 1fr; } .sidebar { display:flex; flex-direction:column; padding:26px 18px; color:#d9e9df; background:var(--green-dark); } .brand { display:flex; gap:12px; align-items:center; color:#fff; font-weight:700; letter-spacing:.02em; padding:0 10px 38px; } .mark { width:38px; height:38px; display:grid; place-items:center; color:var(--green-dark); background:var(--lime); border-radius:11px; } .label { padding:0 12px; color:#7fa99b; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; } .nav { display:grid; gap:5px; margin-top:12px; } .nav a { display:flex; gap:12px; align-items:center; padding:12px; color:#a8c5b9; border-radius:8px; text-decoration:none; } .nav a.active,.nav a:hover { color:var(--green-dark); background:var(--lime); } .nav-icon { width:20px; text-align:center; } .side-footer { margin-top:auto; padding:16px 12px 0; color:#91b3a5; border-top:1px solid rgba(255,255,255,.12); font-size:12px; } .logout { margin-top:15px; padding:0; color:#c3d8d1; border:0; background:transparent; font-weight:600; }
+    main { max-width:1500px; width:100%; margin:auto; padding:34px clamp(22px,4vw,64px); } .topbar { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; } .eyebrow { margin:0 0 12px; color:var(--green); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; } h1,h2 { font-family:'Space Grotesk',sans-serif; letter-spacing:-.04em; } h1 { margin:0; font-size:clamp(30px,4vw,48px); } .sub { margin:8px 0 0; color:var(--muted); } .profile { display:flex; gap:10px; align-items:center; color:var(--muted); font-size:13px; } .avatar { width:38px; height:38px; display:grid; place-items:center; color:var(--green-dark); border-radius:50%; background:var(--lime); font-weight:700; }
+    .toolbar { display:flex; justify-content:space-between; align-items:center; gap:15px; margin-top:34px; } .filters { display:flex; gap:10px; flex:1; } .filters input,.filters select,.form-grid input,.form-grid select { padding:12px 13px; color:var(--ink); border:1px solid var(--line); border-radius:8px; outline:none; background:var(--white); } .filters input { width:min(420px,100%); } .filters input:focus,.form-grid input:focus,.form-grid select:focus { border-color:var(--green); box-shadow:0 0 0 4px rgba(12,107,88,.1); } .button { padding:12px 17px; color:var(--green-dark); border:0; border-radius:8px; background:var(--lime); font-weight:700; } .button.secondary { color:var(--green); border:1px solid var(--line); background:var(--white); }
+    .panel { margin-top:18px; padding:22px; border:1px solid var(--line); border-radius:12px; background:var(--white); box-shadow:var(--shadow); } .table-wrap { overflow:auto; } table { width:100%; min-width:850px; border-collapse:collapse; } th { padding:12px 10px; color:var(--muted); border-bottom:1px solid var(--line); font-size:11px; letter-spacing:.08em; text-align:left; text-transform:uppercase; } td { padding:16px 10px; border-bottom:1px solid #edf1ed; font-size:13px; } tr:last-child td { border-bottom:0; } .sku { font-weight:700; } .secondary-text { margin-top:4px; color:var(--muted); font-size:11px; } .badge { display:inline-block; padding:5px 8px; color:var(--green); border-radius:5px; background:#edf8e4; font-size:11px; font-weight:700; } .badge.off { color:#8b6e6e; background:#f5eeee; } .action { color:var(--green); border:0; background:transparent; font-weight:700; }
+    .modal { position:fixed; inset:0; display:grid; place-items:center; padding:20px; background:rgba(7,82,67,.45); } .modal-card { width:min(100%,620px); padding:28px; border-radius:14px; background:var(--white); box-shadow:0 22px 70px rgba(0,0,0,.2); } .modal-head { display:flex; justify-content:space-between; align-items:start; } .modal-head h2 { margin:0; font-size:27px; } .close { color:var(--muted); border:0; background:transparent; font-size:24px; } .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:22px; } .form-field { display:grid; gap:7px; color:var(--muted); font-size:12px; font-weight:700; } .form-field input,.form-field select { width:100%; } .form-field.full { grid-column:1/-1; } .check { display:flex; gap:8px; align-items:center; color:var(--ink); } .form-footer { display:flex; justify-content:flex-end; gap:10px; margin-top:25px; } .error { min-height:20px; margin-top:12px; color:var(--red); font-size:12px; }
+    @media (max-width:900px) { .shell { display:block; } .sidebar { display:none; } .toolbar { align-items:stretch; flex-direction:column; } .filters { flex-wrap:wrap; } .filters input { width:100%; } } @media (max-width:620px) { main { padding:26px 18px; } .topbar { display:block; } .profile { margin-top:20px; } .form-grid { grid-template-columns:1fr; } .form-field.full { grid-column:auto; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar"><div class="brand"><span class="mark">W</span><span>WAREHOUSE OS</span></div><div class="label">Workspace</div><nav class="nav"><a href="/"><span class="nav-icon">◈</span>ภาพรวมคลัง</a><a class="active" href="/products.html"><span class="nav-icon">◇</span>Master สินค้า</a><a href="/"><span class="nav-icon">□</span>สินค้าคงคลัง</a><a href="/"><span class="nav-icon">↑</span>จัดส่งสินค้า</a></nav><div class="side-footer"><div>Signed in as <strong id="side-user">admin</strong></div><button id="logout" class="logout">ออกจากระบบ ↗</button></div></aside>
+    <main><header class="topbar"><div><p class="eyebrow">Master data / Products</p><h1>จัดการสินค้า</h1><p class="sub">ดูแล SKU, หน่วยนับ, กฎการหมุนสินค้า และสถานะการใช้งาน</p></div><div class="profile"><span id="role">ADMIN</span><span class="avatar" id="avatar">A</span></div></header>
+      <section class="toolbar"><div class="filters"><input id="search" type="search" placeholder="ค้นหา SKU หรือชื่อสินค้า"><select id="active-filter"><option value="true">สินค้าที่ใช้งาน</option><option value="false">สินค้าที่ปิดใช้งาน</option><option value="all">สินค้าทั้งหมด</option></select></div><button id="add-product" class="button">+ เพิ่มสินค้า</button></section>
+      <section class="panel"><div class="table-wrap"><table><thead><tr><th>SKU / สินค้า</th><th>หมวดหมู่</th><th>หน่วย</th><th>Tracking</th><th>Rotation</th><th>สถานะ</th><th></th></tr></thead><tbody id="product-rows"><tr><td colspan="7">กำลังโหลดข้อมูล...</td></tr></tbody></table></div></section>
+    </main>
+  </div>
+  <div id="modal" class="modal hidden"><form id="product-form" class="modal-card"><div class="modal-head"><div><p class="eyebrow">Product record</p><h2 id="modal-title">เพิ่มสินค้า</h2></div><button type="button" class="close" id="close-modal">×</button></div><div class="form-grid"><label class="form-field">SKU<input name="sku" required maxlength="100"></label><label class="form-field">ชื่อสินค้า<input name="name" required maxlength="255"></label><label class="form-field">หมวดหมู่<select name="categoryId" id="category" required></select></label><label class="form-field">หน่วยนับ<select name="baseUomId" id="uom" required></select></label><label class="form-field">Tracking<select name="trackingType"><option value="NONE">ไม่ติดตาม lot/serial</option><option value="LOT">Lot</option><option value="SERIAL">Serial</option></select></label><label class="form-field">Rotation<select name="rotationStrategy"><option value="FIFO">FIFO</option><option value="FEFO">FEFO</option><option value="LIFO">LIFO</option></select></label><label class="form-field">อายุสินค้า (วัน)<input name="shelfLifeDays" type="number" min="0" placeholder="ไม่กำหนด"></label><label class="form-field">น้ำหนักต่อหน่วย<input name="unitWeight" type="number" min="0" step="0.0001" value="0"></label><label class="form-field full check"><input name="isActive" type="checkbox" checked> เปิดใช้งานสินค้า</label></div><div id="form-error" class="error"></div><div class="form-footer"><button type="button" class="button secondary" id="cancel-modal">ยกเลิก</button><button class="button" type="submit">บันทึกสินค้า</button></div></form></div>
+  <script>
+    const token = sessionStorage.getItem('wms_access_token');
+    const savedUser = JSON.parse(sessionStorage.getItem('wms_user') || 'null');
+    if (!token || !savedUser) window.location.href = '/';
+    document.querySelector('#side-user').textContent = savedUser?.username || '';
+    document.querySelector('#role').textContent = savedUser?.role || '';
+    document.querySelector('#avatar').textContent = (savedUser?.fullName || savedUser?.username || 'A').slice(0, 1).toUpperCase();
+    const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
+    const rows = document.querySelector('#product-rows');
+    const modal = document.querySelector('#modal');
+    const form = document.querySelector('#product-form');
+    let products = [];
+    let editingId = null;
+
+    async function loadLookups() {
+      const response = await fetch('/api/v1/master/lookups', { headers });
+      if (!response.ok) throw new Error('ไม่สามารถโหลดหมวดหมู่และหน่วยนับได้');
+      const data = await response.json();
+      document.querySelector('#category').innerHTML = data.categories.map((item) => `<option value="${item.id}">${item.name} (${item.code})</option>`).join('');
+      document.querySelector('#uom').innerHTML = data.uoms.map((item) => `<option value="${item.id}">${item.code} - ${item.name}</option>`).join('');
+    }
+
+    function renderProducts() {
+      if (!products.length) { rows.innerHTML = '<tr><td colspan="7">ไม่พบข้อมูลสินค้า</td></tr>'; return; }
+      rows.innerHTML = products.map((product) => `<tr><td><div class="sku">${product.sku}</div><div class="secondary-text">${product.name}</div></td><td>${product.category_name}</td><td>${product.uom_code}</td><td>${product.tracking_type}</td><td>${product.rotation_strategy}</td><td><span class="badge ${product.is_active ? '' : 'off'}">${product.is_active ? 'ใช้งาน' : 'ปิดใช้งาน'}</span></td><td><button class="action" data-edit="${product.id}">แก้ไข</button></td></tr>`).join('');
+      document.querySelectorAll('[data-edit]').forEach((button) => button.addEventListener('click', () => openModal(products.find((item) => item.id === Number(button.dataset.edit)))));
+    }
+
+    async function loadProducts() {
+      const search = encodeURIComponent(document.querySelector('#search').value);
+      const active = document.querySelector('#active-filter').value;
+      const response = await fetch(`/api/v1/master/products?search=${search}&active=${active}`, { headers });
+      if (response.status === 401) { sessionStorage.clear(); window.location.href = '/'; return; }
+      const data = await response.json();
+      products = data.products || [];
+      renderProducts();
+    }
+
+    function openModal(product) {
+      editingId = product?.id || null;
+      document.querySelector('#modal-title').textContent = editingId ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า';
+      form.reset();
+      form.isActive.checked = product ? Boolean(product.is_active) : true;
+      if (product) Object.entries({ sku: product.sku, name: product.name, categoryId: product.category_id, baseUomId: product.base_uom_id, trackingType: product.tracking_type, rotationStrategy: product.rotation_strategy, shelfLifeDays: product.shelf_life_days || '', unitWeight: product.unit_weight }).forEach(([key, value]) => { form[key].value = value; });
+      document.querySelector('#form-error').textContent = '';
+      modal.classList.remove('hidden');
+    }
+    function closeModal() { modal.classList.add('hidden'); editingId = null; }
+    document.querySelector('#add-product').addEventListener('click', () => openModal());
+    document.querySelector('#close-modal').addEventListener('click', closeModal);
+    document.querySelector('#cancel-modal').addEventListener('click', closeModal);
+    document.querySelector('#search').addEventListener('input', loadProducts);
+    document.querySelector('#active-filter').addEventListener('change', loadProducts);
+    document.querySelector('#logout').addEventListener('click', () => { sessionStorage.clear(); window.location.href = '/'; });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      document.querySelector('#form-error').textContent = '';
+      const payload = Object.fromEntries(new FormData(form).entries());
+      payload.isActive = form.isActive.checked;
+      try {
+        const response = await fetch(editingId ? `/api/v1/master/products/${editingId}` : '/api/v1/master/products', { method: editingId ? 'PATCH' : 'POST', headers, body: JSON.stringify(payload) });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error?.message || 'บันทึกข้อมูลไม่สำเร็จ');
+        closeModal(); await loadProducts();
+      } catch (error) { document.querySelector('#form-error').textContent = error.message; }
+    });
+    (async () => { try { await loadLookups(); await loadProducts(); } catch (error) { rows.innerHTML = `<tr><td colspan="7">${error.message}</td></tr>`; } })();
+  </script>
+</body>
+</html>

@@ -57,7 +57,8 @@
     .nav-label { padding: 0 12px; color: #7fa99b; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     .nav { display: grid; gap: 5px; margin-top: 12px; }
     .nav button { display: flex; gap: 12px; align-items: center; padding: 12px; color: #a8c5b9; border: 0; border-radius: 8px; background: transparent; text-align: left; }
-    .nav button.active, .nav button:hover { color: var(--green-dark); background: var(--lime); }
+    .nav button.active, .nav button:hover, .nav-link:hover { color: var(--green-dark); background: var(--lime); }
+    .nav-link { display: flex; gap: 12px; align-items: center; padding: 12px; color: #a8c5b9; border-radius: 8px; text-decoration: none; }
     .nav-icon { width: 20px; text-align: center; font-size: 16px; }
     .sidebar-footer { margin-top: auto; padding: 16px 12px 0; color: #91b3a5; border-top: 1px solid rgba(255,255,255,.12); font-size: 12px; }
     .logout { margin-top: 15px; padding: 0; color: #c3d8d1; border: 0; background: transparent; font-weight: 600; }
@@ -128,6 +129,7 @@
       <nav class="nav">
         <button class="active"><span class="nav-icon">◈</span>ภาพรวมคลัง</button>
         <button><span class="nav-icon">↓</span>รับสินค้าเข้า</button>
+        <a class="nav-link" href="/products.html"><span class="nav-icon">◇</span>Master สินค้า</a>
         <button><span class="nav-icon">□</span>สินค้าคงคลัง</button>
         <button><span class="nav-icon">↑</span>จัดส่งสินค้า</button>
         <button><span class="nav-icon">▦</span>รายงาน</button>

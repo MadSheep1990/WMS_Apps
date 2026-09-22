@@ -9,12 +9,14 @@ End-to-end Warehouse Management System baseline using a React Native operator ap
 - [MySQL 8 database schema](database/schema.sql)
 - [FIFO/FEFO allocation and putaway SQL examples](examples/inventory-logic.sql)
 - [Authentication backend](src/server.ts)
+- Product master management is available at `/products.html` after login.
 
 ## Quick start
 
 1. Create a MySQL 8 database and run `database/schema.sql`.
-2. Review the API contract before implementing the backend service.
-3. Execute stock mutations in a backend transaction with a unique `Idempotency-Key`.
+2. Run `database/seed-master.sql` for starter UOM/category data.
+3. Review the API contract before implementing the backend service.
+4. Execute stock mutations in a backend transaction with a unique `Idempotency-Key`.
 
 ## API development
 
